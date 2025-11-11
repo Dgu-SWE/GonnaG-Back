@@ -1,7 +1,13 @@
 package swe.gonnag.exception;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@Getter
+@RequiredArgsConstructor
 public class CustomException extends RuntimeException {
-    public CustomException(String message) {
-        super(message);
-    }
+    private final ErrorCode errorCode;
+
+    @Override
+    public String getMessage() { return errorCode.getMessage(); }
 }

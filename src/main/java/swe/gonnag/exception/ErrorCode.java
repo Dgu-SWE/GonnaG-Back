@@ -29,8 +29,7 @@ public enum ErrorCode {
     TOKEN_UNKNOWN("40103", HttpStatus.UNAUTHORIZED, "토큰을 알 수 없습니다."),
     TOKEN_MALFORMED("40104", HttpStatus.UNAUTHORIZED, "잘못된 토큰을 사용했습니다."),
     TOKEN_TYPE("40105", HttpStatus.UNAUTHORIZED, "잘못된 토큰 타입을 사용했습니다."),
-
-
+    INVALID_PASSWORD("40106", HttpStatus.UNAUTHORIZED, "비밀번호가 일치하지 않습니다."),
 
     /**
      * 403** Access Denied
@@ -45,6 +44,7 @@ public enum ErrorCode {
      * 404** Not Found
      */
     NOT_FOUND_END_POINT("40400", HttpStatus.NOT_FOUND, "존재하지 않는 엔드포인트입니다."),
+    USER_NOT_FOUND("40401", HttpStatus.NOT_FOUND, "존재하지 않는 학번입니다."),
 
 
 

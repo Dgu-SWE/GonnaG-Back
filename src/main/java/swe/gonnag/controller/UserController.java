@@ -6,11 +6,14 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import swe.gonnag.domain.dto.request.LoginRequestDto;
+import swe.gonnag.domain.dto.request.UserMsgRequestDto;
+import swe.gonnag.domain.dto.response.ChatHistoryResponseDto;
 import swe.gonnag.domain.dto.response.GraduationProgressResponseDto;
 import swe.gonnag.domain.dto.response.LoginResponseDto;
 import swe.gonnag.domain.entity.UserEntity;
 import swe.gonnag.exception.CustomException;
 import swe.gonnag.exception.ErrorCode;
+import swe.gonnag.service.ChatService;
 import swe.gonnag.service.GetUserInfoService;
 import swe.gonnag.service.UserLoginService;
 
@@ -27,6 +30,7 @@ public class UserController {
 
     private final UserLoginService userLoginService;
     private final GetUserInfoService getUserInfoService;
+    private final ChatService chatService;
 
     // 로그인
     @PostMapping("/signin")
@@ -59,5 +63,10 @@ public class UserController {
     @GetMapping("/progress")
     public  CommonResponseDto<GraduationProgressResponseDto> getGraduationProgress(@AuthenticationPrincipal CustomUserDetails user){
         return CommonResponseDto.ok(getUserInfoService.getGraduationProgress(user.getUserId()));
+    }
+
+    @PostMapping("/chat")
+    public CommonResponseDto<ChatHistoryResponseDto> sendMsg(@AuthenticationPrincipal CustomUserDetails user, @RequestBody UserMsgRequestDto request){
+        return CommonResponseDto.ok(chatService.sendMsg(user.getUserId(), request.msg()));
     }
 }

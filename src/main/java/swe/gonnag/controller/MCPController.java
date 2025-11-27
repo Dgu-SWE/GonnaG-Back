@@ -1,10 +1,9 @@
 package swe.gonnag.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import swe.gonnag.domain.dto.MCP.DefaultResponseDto;
-import swe.gonnag.domain.dto.MCP.UserInfoRequestDTO;
+import swe.gonnag.domain.dto.MCP.UserInfoRequestDto;
 import swe.gonnag.domain.dto.response.UserResponseDto;
 import swe.gonnag.service.MCPService;
 
@@ -22,7 +21,7 @@ public class MCPController {
 
 
     @PostMapping("/user-info")
-    public UserResponseDto userInfoMCP(@RequestBody UserInfoRequestDTO request) {
+    public UserResponseDto userInfoMCP(@RequestBody UserInfoRequestDto request) {
         return mcpService.userInfoMCP(request);
     }
 

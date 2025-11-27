@@ -3,7 +3,7 @@ package swe.gonnag.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import swe.gonnag.domain.dto.MCP.DefaultResponseDto;
-import swe.gonnag.domain.dto.MCP.UserInfoRequestDTO;
+import swe.gonnag.domain.dto.MCP.UserInfoRequestDto;
 import swe.gonnag.domain.dto.response.UserResponseDto;
 import swe.gonnag.domain.entity.UserEntity;
 import swe.gonnag.exception.CustomException;
@@ -20,7 +20,7 @@ public class MCPService {
         return new DefaultResponseDto("2025.11.12 생성 함수");
     }
 
-    public UserResponseDto userInfoMCP(UserInfoRequestDTO request) {
+    public UserResponseDto userInfoMCP(UserInfoRequestDto request) {
         UserEntity user = userRepository.findById(request.id()).orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
         return UserResponseDto.from(user);

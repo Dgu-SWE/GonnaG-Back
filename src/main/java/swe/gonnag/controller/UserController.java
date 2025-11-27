@@ -6,6 +6,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import swe.gonnag.domain.dto.request.LoginRequestDto;
+import swe.gonnag.domain.dto.response.GraduationProgressResponseDto;
 import swe.gonnag.domain.dto.response.LoginResponseDto;
 import swe.gonnag.domain.entity.UserEntity;
 import swe.gonnag.exception.CustomException;
@@ -29,20 +30,18 @@ public class UserController {
 
     // 로그인
     @PostMapping("/signin")
-    public ResponseEntity<CommonResponseDto<LoginResponseDto>> signIn(
+    public CommonResponseDto<LoginResponseDto> signIn(
             @Valid @RequestBody LoginRequestDto requestDto
     ) {
         LoginResponseDto responseDto = userLoginService.login(requestDto);
-        CommonResponseDto<LoginResponseDto> response = CommonResponseDto.ok(responseDto);
-        return new ResponseEntity<>(response, response.httpStatus());
+        return CommonResponseDto.ok(responseDto);
     }
 
     // 로그아웃
     @GetMapping("/signout")
-    public ResponseEntity<CommonResponseDto<Object>> signOut() {
+    public CommonResponseDto<Object> signOut() {
         Map<String, String> message = Map.of("message", "Logout successful");
-        CommonResponseDto<Object> response = CommonResponseDto.ok(message);
-        return new ResponseEntity<>(response, response.httpStatus());
+        return CommonResponseDto.ok(message);
     }
 
 
@@ -55,5 +54,10 @@ public class UserController {
             throw new CustomException(ErrorCode.FAILURE_LOGIN);
         }
         return CommonResponseDto.ok(getUserInfoService.getUserInfo(user.getUserId()));
+    }
+
+    @GetMapping("/progress")
+    public  CommonResponseDto<GraduationProgressResponseDto> getGraduationProgress(@AuthenticationPrincipal CustomUserDetails user){
+        return CommonResponseDto.ok(getUserInfoService.getGraduationProgress(user.getUserId()));
     }
 }

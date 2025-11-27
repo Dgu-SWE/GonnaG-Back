@@ -2,12 +2,15 @@ package swe.gonnag.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+//import lombok.Getter;
+//import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor // <--- [추가 1] 모든 필드 받는 생성자 자동 생성
+@Builder
 @Table(name = "Requirement")
 public class RequirementEntity {
 

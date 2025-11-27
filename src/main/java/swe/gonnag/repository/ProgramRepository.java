@@ -22,4 +22,10 @@ public interface ProgramRepository extends JpaRepository<ProgramEntity, Long> {
             @Param("year") Integer baseYear,
             @Param("track") String programName
     );
+
+    Optional<ProgramEntity> findByDepartmentNameAndProgramNameAndBaseYear(
+            String departmentName,
+            String programName,
+            Integer baseYear
+    );
 }

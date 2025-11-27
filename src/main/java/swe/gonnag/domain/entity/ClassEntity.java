@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Builder;
 
 @Entity
 @Getter
@@ -13,18 +14,31 @@ public class ClassEntity {
 
     @Id
     @Column(name = "cid", nullable = false)
-    private String id; // 학수번호 (PK)
+    private String id; // 학수번호
 
     @Column(name = "name", nullable = false)
-    private String name; // 과목명
+    private String name;
 
     @Column(name = "credit", nullable = false)
-    private Integer credit; // 학점
+    private Integer credit;
 
-    // 추후 Enum으로 관리하여 Requirement와 매핑할 필드
     @Column(name = "course", nullable = false)
-    private Integer courseType; // 교과과정 구분 (예: 1=전필, 2=일교)
+    private Integer courseType; // 1:전필, 2:전선, 3:공교, 5:BSM
 
     @Column(name = "is_english", nullable = false)
-    private Boolean isEnglish; // 영어강의 여부
+    private Boolean isEnglish;
+
+    // 선이수 과목의 학수번호 (화살표 꼬리가 시작되는 곳)
+    @Column(name = "prerequisite_cid")
+    private String prerequisite;
+
+    @Builder
+    public ClassEntity(String id, String name, Integer credit, Integer courseType, Boolean isEnglish, String prerequisite) {
+        this.id = id;
+        this.name = name;
+        this.credit = credit;
+        this.courseType = courseType;
+        this.isEnglish = isEnglish;
+        this.prerequisite = prerequisite;
+    }
 }

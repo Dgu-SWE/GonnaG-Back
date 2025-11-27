@@ -49,6 +49,11 @@ public class AnnouncementEntity {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt; // 정보 갱신 시각
 
+    @Column(name = "announcement_major")
+    // 어느 학과의 공지인지 설정
+    // 전체 공지는 common으로 설정
+    private String major;
+
     // 빌더
     @lombok.Builder
     public AnnouncementEntity(Long originalId, String title, String link, LocalDate date, int viewCount) {

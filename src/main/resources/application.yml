@@ -12,12 +12,11 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
   datasource:
-
-    url: ${DB_URL}
+    url: jdbc:postgresql://svc.sel3.cloudtype.app:31993/swe_db
     driver-class-name: org.postgresql.Driver
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    username: swe_admin
+    password: 1111
 
 jwt:
-  secret-key: ${JWT_SECRET_KEY}
+  secret-key: "TqL%K$zY8p!rAsD9fHjM3bXcvP!sFd@SgVkYp#wZ@tGqL%K$zY8p!rAsD9fH"
   expiration-ms: 3600000

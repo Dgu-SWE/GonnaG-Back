@@ -22,6 +22,12 @@ public interface AnnouncementRepository extends JpaRepository<AnnouncementEntity
     // 서비스에서 date 파라미터에 '오늘 - 7일' 날짜를 넣어주면 됨
     List<AnnouncementEntity> findTop5ByDateAfterOrderByViewCountDesc(LocalDate date);
 
-    // 해당 학과의 전공 조회
+    // 해당 학과 공지 최신순 조회
     List<AnnouncementEntity> findTop10ByMajorInOrderByDateDesc(List<String> majors);
+
+    // 전체 공지 최신순 조회
+    List<AnnouncementEntity> findTop10ByMajorOrderByDateDesc(String major);
+
+    // 전체 공지 조회수 순 조회
+    List<AnnouncementEntity> findTop5ByMajorOrderByViewCountDesc(String major);
 }

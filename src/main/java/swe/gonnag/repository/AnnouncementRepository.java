@@ -21,4 +21,7 @@ public interface AnnouncementRepository extends JpaRepository<AnnouncementEntity
     // 3. 주간 인기 공지 (API 요구사항: 최근 7일 내 작성된 글 중 조회수 높은 순 Top 5)
     // 서비스에서 date 파라미터에 '오늘 - 7일' 날짜를 넣어주면 됨
     List<AnnouncementEntity> findTop5ByDateAfterOrderByViewCountDesc(LocalDate date);
+
+    // 해당 학과의 전공 조회
+    List<AnnouncementEntity> findTop10ByMajorInOrderByDateDesc(List<String> majors);
 }

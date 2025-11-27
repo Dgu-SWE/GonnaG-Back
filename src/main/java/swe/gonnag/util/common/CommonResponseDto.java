@@ -14,7 +14,7 @@ import swe.gonnag.exception.CustomException;
 import swe.gonnag.exception.ErrorCode;
 
 public record CommonResponseDto<T>(@JsonIgnore HttpStatus httpStatus,
-                                   @NotNull Boolean sucsess,
+                                   @NotNull Boolean success,
                                    @Nullable T data,
                                    @Nullable ExceptionDto error) {
 

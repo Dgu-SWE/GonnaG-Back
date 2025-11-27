@@ -2,6 +2,7 @@ package swe.gonnag.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import swe.gonnag.domain.dto.MCP.ClassesInfoResponseDto;
 import swe.gonnag.domain.dto.MCP.DefaultResponseDto;
 import swe.gonnag.domain.dto.MCP.UserInfoRequestDto;
 import swe.gonnag.domain.dto.response.UserResponseDto;
@@ -25,4 +26,9 @@ public class MCPController {
         return mcpService.userInfoMCP(request);
     }
 
+    // 수업 정보 조회
+    @PostMapping("/classes")
+    public ClassesInfoResponseDto classesInfoMCP() {
+        return mcpService.getClassesInfoMCP();
+    }
 }

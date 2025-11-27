@@ -10,10 +10,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import swe.gonnag.exception.CustomException;
 import swe.gonnag.exception.ErrorCode;
+import swe.gonnag.util.common.security.CustomUserDetailsService;
 
 import java.io.IOException;
 
@@ -24,6 +26,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
     private final ObjectMapper objectMapper;
+    private final CustomUserDetailsService customUserDetailsService;
 
     @Override
     protected void doFilterInternal(
@@ -57,8 +60,10 @@ public class JwtFilter extends OncePerRequestFilter {
         try {
             Long userId = jwtUtil.getUserId(token);
 
+            UserDetails userDetails = customUserDetailsService.loadUserByUsername(String.valueOf(userId));
+
             UsernamePasswordAuthenticationToken authenticationToken =
-                    new UsernamePasswordAuthenticationToken(userId, null, null);
+                    new UsernamePasswordAuthenticationToken(userDetails, null, null);
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
             filterChain.doFilter(request, response);

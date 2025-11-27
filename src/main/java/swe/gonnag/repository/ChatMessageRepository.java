@@ -10,4 +10,5 @@ public interface ChatMessageRepository extends JpaRepository<ChatMessageEntity, 
 
     // 특정 유저의 메시지를 생성된 순서대로 조회 (과거 -> 현재)
     List<ChatMessageEntity> findAllByUserOrderByCreatedAtAsc(UserEntity user);
+    List<ChatMessageEntity> findAllByUserIdOrderByCreatedAtAsc(Long userId);
 }

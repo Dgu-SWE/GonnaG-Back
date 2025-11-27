@@ -12,11 +12,11 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
   datasource:
-    url: {$DB_URL}
+    url: ${DB_URL}
     driver-class-name: org.postgresql.Driver
-    username: {$DB_USERNAME}
-    password: {$DB_PASSWORD}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
 
 jwt:
-  secret-key: {$JWT_SECRET_KEY}
+  secret-key: ${JWT_SECRET_KEY}
   expiration-ms: 3600000

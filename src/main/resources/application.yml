@@ -12,6 +12,7 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
   datasource:
+
     url: ${DB_URL}
     driver-class-name: org.postgresql.Driver
     username: ${DB_USERNAME}

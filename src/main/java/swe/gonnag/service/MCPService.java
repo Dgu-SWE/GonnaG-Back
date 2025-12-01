@@ -2,14 +2,15 @@ package swe.gonnag.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import swe.gonnag.domain.dto.MCP.ClassesInfoResponseDto;
+import swe.gonnag.domain.dto.MCP.*;
 import swe.gonnag.domain.dto.MCP.DefaultResponseDto;
-import swe.gonnag.domain.dto.MCP.UserInfoRequestDto;
 import swe.gonnag.domain.dto.response.UserResponseDto;
+import swe.gonnag.domain.entity.AnnouncementEntity;
 import swe.gonnag.domain.entity.ClassEntity;
 import swe.gonnag.domain.entity.UserEntity;
 import swe.gonnag.exception.CustomException;
 import swe.gonnag.exception.ErrorCode;
+import swe.gonnag.repository.AnnouncementRepository;
 import swe.gonnag.repository.ClassRepository;
 import swe.gonnag.repository.UserRepository;
 
@@ -21,12 +22,15 @@ public class MCPService {
 
     private final UserRepository userRepository;
     private final ClassRepository classRepository;
+    private final AnnouncementRepository announcementRepository;
+
+
 
     public DefaultResponseDto defaultMCP() {
         return new DefaultResponseDto("2025.11.12 생성 함수");
     }
 
-    public UserResponseDto userInfoMCP(UserInfoRequestDto request) {
+    public UserResponseDto userInfoMCP(MCPRequestDto request) {
         UserEntity user = userRepository.findById(request.id()).orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
         return UserResponseDto.from(user);
@@ -45,5 +49,13 @@ public class MCPService {
 
         return ClassesInfoResponseDto.builder()
                 .classInfoList(allClassesInfo).build();
+    }
+
+    public List<AnnouncementsResponseDto> getAnnouncementsMCP() {
+        List<AnnouncementEntity> entities = announcementRepository.findAll();
+
+        return entities.stream()
+                .map(AnnouncementsResponseDto::from)
+                .toList();
     }
 }

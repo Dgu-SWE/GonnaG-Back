@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.*;
 import swe.gonnag.domain.dto.MCP.AnnouncementsResponseDto;
 import swe.gonnag.domain.dto.MCP.ClassesInfoResponseDto;
 import swe.gonnag.domain.dto.MCP.DefaultResponseDto;
-import swe.gonnag.domain.dto.MCP.UserInfoRequestDto;
 import swe.gonnag.domain.dto.response.CurriculumGuideResponseDto;
 import swe.gonnag.domain.dto.MCP.MCPRequestDto;
 import swe.gonnag.domain.dto.response.UserResponseDto;
@@ -38,12 +37,12 @@ public class MCPController {
     }
 
     @PostMapping("/guide")
-    public CurriculumGuideResponseDto guideMCP(@RequestBody UserInfoRequestDto request) {
+    public CurriculumGuideResponseDto guideMCP(@RequestBody MCPRequestDto request) {
         return mcpService.getCurriculumGuideMCP(request);
     }
 
     @GetMapping("/announcements")
     public List<AnnouncementsResponseDto> announcemetsMCP() {
-        return mcpService.getAnnouncementsMCP();
+        return mcpService.announcemetsMCP();
     }
 }

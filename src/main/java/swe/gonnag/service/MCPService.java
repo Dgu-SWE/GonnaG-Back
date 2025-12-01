@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import swe.gonnag.domain.dto.MCP.*;
 import swe.gonnag.domain.dto.MCP.DefaultResponseDto;
-import swe.gonnag.domain.dto.MCP.UserInfoRequestDto;
 import swe.gonnag.domain.dto.response.CurriculumGuideResponseDto;
 import swe.gonnag.domain.dto.response.UserResponseDto;
 import swe.gonnag.domain.entity.AnnouncementEntity;
@@ -57,7 +56,7 @@ public class MCPService {
     }
 
     // 사용자의 전공에 해당하는 학업이수가이드 요청
-    public CurriculumGuideResponseDto getCurriculumGuideMCP(UserInfoRequestDto userDto) {
+    public CurriculumGuideResponseDto getCurriculumGuideMCP(MCPRequestDto userDto) {
 
         // user 정보 찾기
         UserEntity user = userRepository.findById(userDto.id())
@@ -72,10 +71,12 @@ public class MCPService {
                 .toList();
 
         return CurriculumGuideResponseDto.of(programId, dtoList);
-    public List<AnnouncementsResponseDto> getAnnouncementsMCP() {
-        List<AnnouncementEntity> entities = announcementRepository.findAll();
+    }
 
-        return entities.stream()
+    public List<AnnouncementsResponseDto> announcemetsMCP() {
+        List<AnnouncementEntity> announcements = announcementRepository.findAll();
+
+        return announcements.stream()
                 .map(AnnouncementsResponseDto::from)
                 .toList();
     }

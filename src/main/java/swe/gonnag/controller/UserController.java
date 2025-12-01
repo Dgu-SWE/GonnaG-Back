@@ -21,6 +21,7 @@ import swe.gonnag.util.common.CommonResponseDto;
 import jakarta.validation.Valid;
 import swe.gonnag.util.common.security.CustomUserDetails;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -68,5 +69,10 @@ public class UserController {
     @PostMapping("/chat")
     public CommonResponseDto<ChatHistoryResponseDto> sendMsg(@AuthenticationPrincipal CustomUserDetails user, @RequestBody UserMsgRequestDto request){
         return CommonResponseDto.ok(chatService.sendMsg(user.getUserId(), request.msg()));
+    }
+
+    @GetMapping("/chat/history")
+    public CommonResponseDto<ChatHistoryResponseDto> chatHistory(@AuthenticationPrincipal CustomUserDetails user){
+        return CommonResponseDto.ok(chatService.chatHistory(user.getUserId()));
     }
 }

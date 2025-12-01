@@ -111,4 +111,9 @@ public class ChatService {
         // 8. 최종 채팅 기록 반환
         return ChatHistoryResponseDto.from(chatHistory);
     }
+
+    public ChatHistoryResponseDto chatHistory(Long userId) {
+        List<ChatMessageEntity> chatHistory = chatMessageRepository.findAllByUserIdOrderByCreatedAtAsc(userId);
+        return ChatHistoryResponseDto.from(chatHistory);
+    }
 }

@@ -44,7 +44,8 @@ public class GetUserInfoService {
                 userEntity.getEarnedCredits(),
                 userEntity.getDepartment(),
                 userEntity.getMajor(),
-                userEntity.getTrack()
+                userEntity.getTrack(),
+                userEntity.getProgramId()
         );
     }
 

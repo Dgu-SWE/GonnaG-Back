@@ -10,7 +10,8 @@ public record UserResponseDto(
         Integer year,
         String department,
         String major,
-        String track // 심화/일반 트랙 정보 포함
+        String track, // 심화/일반 트랙 정보 포함
+        Long programId
 ) {
     public static UserResponseDto from(UserEntity user) {
         return UserResponseDto.builder()
@@ -20,6 +21,7 @@ public record UserResponseDto(
                 .department(user.getDepartment())
                 .major(user.getMajor())
                 .track(user.getTrack())
+                .programId(user.getProgramId())
                 .build();
     }
 }

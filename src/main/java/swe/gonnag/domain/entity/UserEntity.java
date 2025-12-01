@@ -42,6 +42,9 @@ public class UserEntity {
     @Column(name = "track")
     private String track; // 트랙 (추가됨: 심화/일반 등)
 
+    @Column(name = "program_id")
+    private Long programId;
+
     // --- 양방향 매핑 (DB 컬럼 아님, 자바에서 조회 편의성 제공) ---
     // 유저가 삭제되면 수강기록도 같이 삭제됨 (CascadeType.ALL)
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
@@ -49,7 +52,7 @@ public class UserEntity {
 
     // 테스트 및 회원가입용 빌더 (필요 시 사용)
     @lombok.Builder
-    public UserEntity(Long id, String pwd, String name, Integer year, String status, Integer earnedCredits, String department, String major, String track) {
+    public UserEntity(Long id, String pwd, String name, Integer year, String status, Integer earnedCredits, String department, String major, String track, Long programId) {
         this.id = id;
         this.pwd = pwd;
         this.name = name;
@@ -59,5 +62,6 @@ public class UserEntity {
         this.department = department;
         this.major = major;
         this.track = track;
+        this.programId = programId;
     }
 }

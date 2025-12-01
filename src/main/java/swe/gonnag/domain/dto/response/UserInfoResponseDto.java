@@ -8,6 +8,7 @@ public record UserInfoResponseDto(
         Integer earnedCredits,
         String department,
         String major,
-        String track
+        String track,
+        Long programId
 ) {
 }

@@ -5,12 +5,15 @@ import org.springframework.stereotype.Service;
 import swe.gonnag.domain.dto.MCP.ClassesInfoResponseDto;
 import swe.gonnag.domain.dto.MCP.DefaultResponseDto;
 import swe.gonnag.domain.dto.MCP.UserInfoRequestDto;
+import swe.gonnag.domain.dto.response.CurriculumGuideResponseDto;
 import swe.gonnag.domain.dto.response.UserResponseDto;
 import swe.gonnag.domain.entity.ClassEntity;
+import swe.gonnag.domain.entity.RequirementEntity;
 import swe.gonnag.domain.entity.UserEntity;
 import swe.gonnag.exception.CustomException;
 import swe.gonnag.exception.ErrorCode;
 import swe.gonnag.repository.ClassRepository;
+import swe.gonnag.repository.RequirementRepository;
 import swe.gonnag.repository.UserRepository;
 
 import java.util.List;
@@ -21,6 +24,7 @@ public class MCPService {
 
     private final UserRepository userRepository;
     private final ClassRepository classRepository;
+    private final RequirementRepository requirementRepository;
 
     public DefaultResponseDto defaultMCP() {
         return new DefaultResponseDto("2025.11.12 생성 함수");
@@ -45,5 +49,23 @@ public class MCPService {
 
         return ClassesInfoResponseDto.builder()
                 .classInfoList(allClassesInfo).build();
+    }
+
+    // 사용자의 전공에 해당하는 학업이수가이드 요청
+    public CurriculumGuideResponseDto getCurriculumGuideMCP(UserInfoRequestDto userDto) {
+
+        // user 정보 찾기
+        UserEntity user = userRepository.findById(userDto.id())
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+
+        Long programId = user.getProgramId();
+
+        List<RequirementEntity> entities = requirementRepository.findAllByProgramId(programId);
+
+        List<CurriculumGuideResponseDto.RequirementDto> dtoList = entities.stream()
+                .map(CurriculumGuideResponseDto.RequirementDto::from)
+                .toList();
+
+        return CurriculumGuideResponseDto.of(programId, dtoList);
     }
 }

@@ -1,5 +1,7 @@
 package swe.gonnag.domain.dto.response;
 
+import java.util.List;
+
 public record UserInfoResponseDto(
         Long id,
         String name,

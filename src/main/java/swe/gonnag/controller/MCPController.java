@@ -7,7 +7,7 @@ import swe.gonnag.domain.dto.MCP.ClassesInfoResponseDto;
 import swe.gonnag.domain.dto.MCP.DefaultResponseDto;
 import swe.gonnag.domain.dto.response.CurriculumGuideResponseDto;
 import swe.gonnag.domain.dto.MCP.MCPRequestDto;
-import swe.gonnag.domain.dto.response.UserResponseDto;
+import swe.gonnag.domain.dto.response.MCPUserInfoResponseDto;
 import swe.gonnag.service.MCPService;
 
 import java.util.List;
@@ -26,7 +26,7 @@ public class MCPController {
 
 
     @PostMapping("/user-info")
-    public UserResponseDto userInfoMCP(@RequestBody MCPRequestDto request) {
+    public MCPUserInfoResponseDto userInfoMCP(@RequestBody MCPRequestDto request) {
         return mcpService.userInfoMCP(request);
     }
 

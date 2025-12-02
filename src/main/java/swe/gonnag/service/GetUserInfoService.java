@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import swe.gonnag.domain.dto.response.GraduationProgressResponseDto;
+import swe.gonnag.domain.dto.response.MCPUserInfoResponseDto;
 import swe.gonnag.domain.dto.response.UserInfoResponseDto;
 import swe.gonnag.domain.entity.ProgramEntity;
 import swe.gonnag.domain.entity.RequirementEntity;

@@ -2,10 +2,11 @@ package swe.gonnag.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import swe.gonnag.domain.dto.MCP.*;
 import swe.gonnag.domain.dto.MCP.DefaultResponseDto;
 import swe.gonnag.domain.dto.response.CurriculumGuideResponseDto;
-import swe.gonnag.domain.dto.response.UserResponseDto;
+import swe.gonnag.domain.dto.response.MCPUserInfoResponseDto;
 import swe.gonnag.domain.entity.AnnouncementEntity;
 import swe.gonnag.domain.entity.ClassEntity;
 import swe.gonnag.domain.entity.RequirementEntity;
@@ -34,10 +35,15 @@ public class MCPService {
         return new DefaultResponseDto("2025.11.12 생성 함수");
     }
 
-    public UserResponseDto userInfoMCP(MCPRequestDto request) {
-        UserEntity user = userRepository.findById(request.id()).orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+    @Transactional(readOnly = true) // [중요] Lazy Loading을 위해 트랜잭션 유지 필수
+    public MCPUserInfoResponseDto userInfoMCP(MCPRequestDto request) {
 
-        return UserResponseDto.from(user);
+        // 1. 유저 조회
+        UserEntity user = userRepository.findById(request.id())
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+
+        // 2. DTO 변환 (여기서 user.getTranscriptList()가 호출되며 수강 정보를 가져옴)
+        return MCPUserInfoResponseDto.from(user);
     }
 
     // 수업 정보 요청

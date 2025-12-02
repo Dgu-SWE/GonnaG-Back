@@ -16,15 +16,15 @@ public record MCPUserInfoResponseDto(
         String major,
         String track,
         Long programId,
-        // [추가] 수강한 과목 리스트
-        List<TakenCourseInfo> takenCourses
+        List<TakenCourseInfo> takenCourses,
+        GraduationProgressResponseDto progress
 ) {
-    // 내부 DTO: 수강한 강의 정보 요약
+    // 내부 DTO
     public record TakenCourseInfo(
-            String cid,        // 학수번호
+            String cid,        // 학수번호 (중복 추천 방지 핵심)
             String name,       // 과목명
-            Integer credit,    // 학점
-            Integer courseType // 이수구분 (1:전필, 2:전선 등)
+            Integer credit,
+            Integer courseType
     ) {
         public static TakenCourseInfo from(ClassEntity classEntity) {
             return new TakenCourseInfo(
@@ -36,9 +36,9 @@ public record MCPUserInfoResponseDto(
         }
     }
 
-    // Entity -> DTO 변환 메서드
-    public static MCPUserInfoResponseDto from(UserEntity user) {
-        // 유저가 들은 수업(Transcript) 목록을 순회하며 DTO 리스트로 변환
+    // 팩토리 메서드 수정
+    public static MCPUserInfoResponseDto of(UserEntity user, GraduationProgressResponseDto progress) {
+        // 유저의 수강 기록(Transcript)을 DTO 리스트로 변환
         List<TakenCourseInfo> courses = user.getTranscriptList() == null
                 ? Collections.emptyList()
                 : user.getTranscriptList().stream()
@@ -55,7 +55,8 @@ public record MCPUserInfoResponseDto(
                 user.getMajor(),
                 user.getTrack(),
                 user.getProgramId(),
-                courses // 변환된 리스트 주입
+                courses,  // 상세 내역 주입
+                progress  // 계산 결과 주입
         );
     }
 }

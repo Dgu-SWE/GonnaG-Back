@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import swe.gonnag.domain.dto.MCP.*;
 import swe.gonnag.domain.dto.MCP.DefaultResponseDto;
 import swe.gonnag.domain.dto.response.CurriculumGuideResponseDto;
+import swe.gonnag.domain.dto.response.GraduationProgressResponseDto;
 import swe.gonnag.domain.dto.response.MCPUserInfoResponseDto;
 import swe.gonnag.domain.entity.AnnouncementEntity;
 import swe.gonnag.domain.entity.ClassEntity;
@@ -17,6 +18,7 @@ import swe.gonnag.repository.AnnouncementRepository;
 import swe.gonnag.repository.ClassRepository;
 import swe.gonnag.repository.RequirementRepository;
 import swe.gonnag.repository.UserRepository;
+import swe.gonnag.service.GetUserInfoService;
 
 import java.util.List;
 
@@ -28,6 +30,7 @@ public class MCPService {
     private final ClassRepository classRepository;
     private final RequirementRepository requirementRepository;
     private final AnnouncementRepository announcementRepository;
+    private final GetUserInfoService getUserInfoService;
 
 
 
@@ -35,15 +38,17 @@ public class MCPService {
         return new DefaultResponseDto("2025.11.12 생성 함수");
     }
 
-    @Transactional(readOnly = true) // [중요] Lazy Loading을 위해 트랜잭션 유지 필수
+    @Transactional(readOnly = true)
     public MCPUserInfoResponseDto userInfoMCP(MCPRequestDto request) {
-
         // 1. 유저 조회
         UserEntity user = userRepository.findById(request.id())
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
-        // 2. DTO 변환 (여기서 user.getTranscriptList()가 호출되며 수강 정보를 가져옴)
-        return MCPUserInfoResponseDto.from(user);
+        // 2. 졸업 요건 계산 로직 호출 (수강 기록을 바탕으로 계산)
+        GraduationProgressResponseDto progress = getUserInfoService.getGraduationProgress(request.id());
+
+        // 3. 유저 정보 + 수강 목록 + 계산 결과를 한 번에 묶어서 반환
+        return MCPUserInfoResponseDto.of(user, progress);
     }
 
     // 수업 정보 요청
